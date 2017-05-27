@@ -30,8 +30,8 @@ import scala.language.{higherKinds, implicitConversions}
   def flip[A, B](fab: F[A => B]): F[A] => F[B] =
     fa => apply(fa)(fab)
 
-  def compose[G[_]](implicit G: Applicative[G]): Applicative[Lambda[X => F[G[X]]]] =
-    new Applicative[Lambda[X => F[G[X]]]] {
+  def compose[G[_]](implicit G: Applicative[G]): Applicative[({type fg[x] = F[G[x]]})#fg] =
+    new Applicative[({type fg[x] = F[G[x]]})#fg] {
 
       override def pure[A](a: A): F[G[A]] =
         self.pure(G.pure(a))

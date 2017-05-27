@@ -32,4 +32,15 @@ object Functor {
   implicit def function1Functor[X]: Functor[X => ?] = new Functor[X => ?] {
     override def map[A, B](fa: (X) => A)(f: (A) => B): (X) => B = fa andThen f
   }
+  implicit def mapFunctor[K]: Functor[Map[K, ?]] =
+    new Functor[Map[K, ?]] {
+      override def map[A, B](fa: Map[K, A])(f: A => B): Map[K, B] =
+        fa.map { case (k, a) => (k, f(a)) }
+    }
+  // the below is same as above, just doesn't require kind prjector compiler plugin
+  // implicit def mapFunctor[K]: Functor[({ type L[v] = Map[K, v] })#L] =
+  //   new Functor[({ type L[v] = Map[K, v] })#L] {
+  //     override def map[A, B](fa: Map[K, A])(f: A => B): Map[K, B] =
+  //       fa.map { case (k, a) => (k, f(a)) }
+  //   }
 }
