@@ -2,7 +2,7 @@ name := "mpilquist-fp"
 
 version := "1.0-SNAPSHOT"
 
-scalaVersion := "2.12.2"
+scalaVersion := "2.12.7"
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-feature")
 
